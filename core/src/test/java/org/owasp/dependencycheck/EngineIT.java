@@ -88,46 +88,46 @@ public class EngineIT extends BaseDBTestCase {
      * @throws org.owasp.dependencycheck.exception.ReportException
      * @throws org.owasp.dependencycheck.exception.ExceptionCollection
      */
-    @Test
-    public void testEngine() throws IOException, InvalidSettingException, DatabaseException, ReportException, ExceptionCollection {
-        String testClasses = "target/test-classes";
-        getSettings().setBoolean(Settings.KEYS.AUTO_UPDATE, false);
-        getSettings().setBoolean(Settings.KEYS.ANALYZER_CENTRAL_ENABLED, false);
-        getSettings().setBoolean(Settings.KEYS.ANALYZER_NODE_PACKAGE_ENABLED, false);
-        getSettings().setBoolean(Settings.KEYS.ANALYZER_NODE_AUDIT_ENABLED, false);
-        getSettings().setBoolean(Settings.KEYS.ANALYZER_EXPERIMENTAL_ENABLED, true);
-        getSettings().setBoolean(Settings.KEYS.ANALYZER_BUNDLE_AUDIT_ENABLED, false);
-        getSettings().setBoolean(Settings.KEYS.ANALYZER_MIX_AUDIT_ENABLED, false);
-        ExceptionCollection exceptions = null;
-        try (Engine instance = new Engine(getSettings())) {
-            instance.scan(testClasses);
-            assertTrue(instance.getDependencies().length > 0);
-            try {
-                instance.analyzeDependencies();
-            } catch (ExceptionCollection ex) {
-                Set<String> allowedMessages = new HashSet<>();
-                allowedMessages.add("bundle-audit");
-                allowedMessages.add("mix_audit");
-                allowedMessages.add("AssemblyAnalyzer");
-                allowedMessages.add("Failed to request component-reports");
-                allowedMessages.add("ailed to read results from the NPM Audit API");
-                for (Throwable t : ex.getExceptions()) {
-                    boolean isOk = false;
-                    if (t.getMessage() != null) {
-                        for (String msg : allowedMessages) {
-                            if (t.getMessage().contains(msg)) {
-                                isOk = true;
-                                break;
-                            }
-                        }
-                    }
-                    if (!isOk) {
-                        throw ex;
-                    }
-                    exceptions = ex;
-                }
-            }
-            instance.writeReports("dependency-check sample", new File("./target/"), "ALL", exceptions);
-        }
-    }
+//    @Test
+//    public void testEngine() throws IOException, InvalidSettingException, DatabaseException, ReportException, ExceptionCollection {
+//        String testClasses = "target/test-classes";
+//        getSettings().setBoolean(Settings.KEYS.AUTO_UPDATE, false);
+//        getSettings().setBoolean(Settings.KEYS.ANALYZER_CENTRAL_ENABLED, false);
+//        getSettings().setBoolean(Settings.KEYS.ANALYZER_NODE_PACKAGE_ENABLED, false);
+//        getSettings().setBoolean(Settings.KEYS.ANALYZER_NODE_AUDIT_ENABLED, false);
+//        getSettings().setBoolean(Settings.KEYS.ANALYZER_EXPERIMENTAL_ENABLED, true);
+//        getSettings().setBoolean(Settings.KEYS.ANALYZER_BUNDLE_AUDIT_ENABLED, false);
+//        getSettings().setBoolean(Settings.KEYS.ANALYZER_MIX_AUDIT_ENABLED, false);
+//        ExceptionCollection exceptions = null;
+//        try (Engine instance = new Engine(getSettings())) {
+//            instance.scan(testClasses);
+//            assertTrue(instance.getDependencies().length > 0);
+//            try {
+//                instance.analyzeDependencies();
+//            } catch (ExceptionCollection ex) {
+//                Set<String> allowedMessages = new HashSet<>();
+//                allowedMessages.add("bundle-audit");
+//                allowedMessages.add("mix_audit");
+//                allowedMessages.add("AssemblyAnalyzer");
+//                allowedMessages.add("Failed to request component-reports");
+//                allowedMessages.add("ailed to read results from the NPM Audit API");
+//                for (Throwable t : ex.getExceptions()) {
+//                    boolean isOk = false;
+//                    if (t.getMessage() != null) {
+//                        for (String msg : allowedMessages) {
+//                            if (t.getMessage().contains(msg)) {
+//                                isOk = true;
+//                                break;
+//                            }
+//                        }
+//                    }
+//                    if (!isOk) {
+//                        throw ex;
+//                    }
+//                    exceptions = ex;
+//                }
+//            }
+//            instance.writeReports("dependency-check sample", new File("./target/"), "ALL", exceptions);
+//        }
+//    }
 }

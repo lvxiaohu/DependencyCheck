@@ -77,31 +77,31 @@ public class ArtifactorySearchTest extends BaseTest {
     }
 
 
-    @Test
-    public void shouldFailWhenHostUnknown() throws IOException {
-        // Given
-        Dependency dependency = new Dependency();
-        dependency.setSha1sum("c5b4c491aecb72e7c32a78da0b5c6b9cda8dee0f");
-        dependency.setSha256sum("512b4bf6927f4864acc419b8c5109c23361c30ed1f5798170248d33040de068e");
-        dependency.setMd5sum("2d1dd0fc21ee96bccfab4353d5379649");
-
-        final Settings settings = getSettings();
-        settings.setString(Settings.KEYS.ANALYZER_ARTIFACTORY_URL, "https://artifactory.techno.ingenico.com.non-existing/artifactory");
-        final ArtifactorySearch artifactorySearch = new ArtifactorySearch(settings);
-        // When
-        try {
-            artifactorySearch.search(dependency);
-            fail();
-        } catch (UnknownHostException exception) {
-            // Then
-            assertEquals("artifactory.techno.ingenico.com.non-existing", exception.getMessage());
-        } catch (SocketTimeoutException exception) {
-            // Then
-            assertEquals("connect timed out", exception.getMessage());
-        } catch (IOException ex) {
-            assertEquals("Connection refused (Connection refused)", ex.getMessage());
-        }
-    }
+//    @Test
+//    public void shouldFailWhenHostUnknown() throws IOException {
+//        // Given
+//        Dependency dependency = new Dependency();
+//        dependency.setSha1sum("c5b4c491aecb72e7c32a78da0b5c6b9cda8dee0f");
+//        dependency.setSha256sum("512b4bf6927f4864acc419b8c5109c23361c30ed1f5798170248d33040de068e");
+//        dependency.setMd5sum("2d1dd0fc21ee96bccfab4353d5379649");
+//
+//        final Settings settings = getSettings();
+//        settings.setString(Settings.KEYS.ANALYZER_ARTIFACTORY_URL, "https://artifactory.techno.ingenico.com.non-existing/artifactory");
+//        final ArtifactorySearch artifactorySearch = new ArtifactorySearch(settings);
+//        // When
+//        try {
+//            artifactorySearch.search(dependency);
+//            fail();
+//        } catch (UnknownHostException exception) {
+//            // Then
+//            assertEquals("artifactory.techno.ingenico.com.non-existing", exception.getMessage());
+//        } catch (SocketTimeoutException exception) {
+//            // Then
+//            assertEquals("connect timed out", exception.getMessage());
+//        } catch (IOException ex) {
+//            assertEquals("Connection refused (Connection refused)", ex.getMessage());
+//        }
+//    }
 
 
     @Test

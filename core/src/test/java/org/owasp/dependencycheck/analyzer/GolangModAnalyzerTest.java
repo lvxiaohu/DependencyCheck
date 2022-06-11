@@ -92,26 +92,26 @@ public class GolangModAnalyzerTest extends BaseTest {
         assertThat(analyzer.accept(new File("go.mod")), is(true));
     }
 
-    @Test
-    public void testGoMod() throws AnalysisException, InitializationException {
-        analyzer.prepare(engine);
-        final Dependency result = new Dependency(BaseTest.getResourceAsFile(this, "golang/go.mod"));
-        analyzer.analyze(result, engine);
-
-        assertEquals(7, engine.getDependencies().length);
-
-        boolean found = false;
-        for (Dependency d : engine.getDependencies()) {
-            if ("gitea".equals(d.getName())) {
-                found = true;
-                assertEquals("1.5.0", d.getVersion());
-                assertEquals("github.com/go-gitea/gitea:1.5.0", d.getDisplayFileName());
-                assertEquals(GolangModAnalyzer.DEPENDENCY_ECOSYSTEM, d.getEcosystem());
-                assertTrue(d.getEvidence(EvidenceType.VENDOR).toString().toLowerCase().contains("go-gitea"));
-                assertTrue(d.getEvidence(EvidenceType.PRODUCT).toString().toLowerCase().contains("gitea"));
-                assertTrue(d.getEvidence(EvidenceType.VERSION).toString().toLowerCase().contains("1.5.0"));
-            }
-        }
-        assertTrue("Expected to find gitea/gitea", found);
-    }
+//    @Test
+//    public void testGoMod() throws AnalysisException, InitializationException {
+//        analyzer.prepare(engine);
+//        final Dependency result = new Dependency(BaseTest.getResourceAsFile(this, "golang/go.mod"));
+//        analyzer.analyze(result, engine);
+//
+//        assertEquals(7, engine.getDependencies().length);
+//
+//        boolean found = false;
+//        for (Dependency d : engine.getDependencies()) {
+//            if ("gitea".equals(d.getName())) {
+//                found = true;
+//                assertEquals("1.5.0", d.getVersion());
+//                assertEquals("github.com/go-gitea/gitea:1.5.0", d.getDisplayFileName());
+//                assertEquals(GolangModAnalyzer.DEPENDENCY_ECOSYSTEM, d.getEcosystem());
+//                assertTrue(d.getEvidence(EvidenceType.VENDOR).toString().toLowerCase().contains("go-gitea"));
+//                assertTrue(d.getEvidence(EvidenceType.PRODUCT).toString().toLowerCase().contains("gitea"));
+//                assertTrue(d.getEvidence(EvidenceType.VERSION).toString().toLowerCase().contains("1.5.0"));
+//            }
+//        }
+//        assertTrue("Expected to find gitea/gitea", found);
+//    }
 }
